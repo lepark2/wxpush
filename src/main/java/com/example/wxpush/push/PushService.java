@@ -59,6 +59,9 @@ public class PushService {
 
     private void getToken() {
         writeLock.lock();
+        if (expireTime != null && LocalDateTime.now().isBefore(expireTime)) {
+            return;
+        }
         try {
             if (showdetail) {
                 log.info("getToken corpId: {}, corpSecret: {}", corpId, corpSecret);
